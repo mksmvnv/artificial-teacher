@@ -1,1 +1,3 @@
-# artificial_english_teacher
+# LinguAI Pro
+
+soon...
