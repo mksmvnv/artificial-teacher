@@ -1,7 +1,7 @@
 [project]
-name = "artificial-teacher"
+name = "linguai-pro"
 version = "0.1.0"
-description = "Add your description here"
+description = "..."
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
@@ -23,29 +23,64 @@ dev = [
 
 [tool.ruff]
 line-length = 120
+target-version = "py313"
+exclude = [
+    "src/migrations/",
+]
 
 [tool.ruff.lint]
 select = [
-  "E",   # pycodestyle errors
-  "F",   # pyflakes
-  "I",   # isort
-  "B",   # flake8-bugbear
-  "C4",  # flake8-comprehensions
-  "UP",  # pyupgrade
-  "W",   # pycodestyle warnings
+    "E",    # pycodestyle errors
+    "W",    # pycodestyle warnings
+    "F",    # pyflakes
+    "I",    # isort (import sorting)
+    "B",    # flake8-bugbear
+    "C4",   # flake8-comprehensions
+    "UP",   # pyupgrade
+    "D",    # pydocstyle
+    "ANN",  # flake8-annotations
+    "T20",  # flake8-print (print statements)
+    "PT",   # flake8-pytest-style
+    "SIM",  # flake8-simplify
+    "ARG",  # flake8-unused-arguments
+    "RUF",  # ruff-specific rules
+    "TD",   # flake8-todo
+    "FAST", # flake8-fastapi
+    "ASYNC",# flake8-async
+    "S",    # flake8-bandit (security)
+    "BLE",  # flake8-blind-except
+    "COM",  # flake8-commas
+    "PIE",  # flake8-pie
+    "RSE",  # flake8-raise
+    "TID252", # flake8-tidy-imports
+    "N",    # pep8-naming
+    "PLR",  # pylint refactor rules
+    "FURB", # flake8-refurb
+    "TRY"   # flake8-try
 ]
-ignore = []
-unfixable = ["B", "T20"]
+
+ignore = [
+    "D100",    # missing docstring in public module
+    "D104",    # missing docstring in public package
+    "D107",    # missing docstring in __init__
+    "RUF001",  # ruff-specific rule
+    "RUF002",  # ruff-specific rule
+    "RUF003",  # ruff-specific rule
+    "S104",    # hardcoded bind all interfaces
+    "COM812"   # specific combination rule
+]
 
 [tool.ruff.lint.isort]
 known-first-party = ["src"]
 
 [tool.ruff.format]
 quote-style = "double"
-skip-magic-trailing-comma = false
 
 [tool.ruff.lint.per-file-ignores]
 "__init__.py" = ["F401"]  # allow unused imports in __init__.py
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
 
 [tool.mypy]
 python_version = "3.13"
