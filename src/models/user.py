@@ -11,7 +11,7 @@ LAST_NAME_MAX_LENGTH: Final[int] = 64
 
 
 class User(Base):
-    """Telegram user model."""
+    """User model."""
 
     tg_id: Mapped[int] = mapped_column(BigInteger, unique=True, nullable=False, index=True)
     username: Mapped[str] = mapped_column(String(USERNAME_MAX_LENGTH), index=True)
