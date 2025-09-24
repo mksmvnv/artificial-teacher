@@ -1,9 +1,17 @@
 .PHONY: check fix
 .PHONY: revision upgrade downgrade
 
-SRC ?= src/
+SRC ?= src
+
+# Application
+
+all: fix check run
+
+run:
+	uv run $(SRC)/main.py
 
 # Code quality (Ruff, Mypy)
+
 check:
 	uv run ruff check $(SRC)
 	uv run mypy $(SRC)
