@@ -23,7 +23,7 @@ class DatabaseSettings(BaseModel):
 
     @property
     def url(self) -> str:
-        """Database URL."""
+        """Prepare database URL."""
         return f"{self.dialect}+{self.driver}://{self.user}:{self.password}@{self.host}:{self.port}/{self.name}"
 
 
