@@ -1,5 +1,4 @@
-.PHONY: check fix
-.PHONY: revision upgrade downgrade
+.PHONY: run check fix revision upgrade downgrade current history
 
 SRC ?= src
 
@@ -8,29 +7,32 @@ SRC ?= src
 all: fix check run
 
 run:
-	uv run $(SRC)/main.py
+	uv run python -m $(SRC).main
 
-# Code quality (Ruff, Mypy)
+# Code quality
 
 check:
 	uv run ruff check $(SRC)
 	uv run mypy $(SRC)
 
 fix:
-	uv run ruff check --fix $(SRC)
 	uv run ruff format $(SRC)
+	uv run ruff check --fix $(SRC)
 
-
-# Database (Alembic)
-
-.PHONY: revision upgrade downgrade
+# Migrations
 
 revision:
-	uv run alembic revision --autogenerate -m "$(msg)"
+	uv run alembic revision --autogenerate -m "$(MSG)"
 
 upgrade:
 	uv run alembic upgrade head
 
 downgrade:
-	uv run alembic downgrade "$(rev)"
+	uv run alembic downgrade "$(REV)"
+
+current:
+	uv run alembic current
+
+history:
+	uv run alembic history
 
