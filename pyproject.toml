@@ -19,6 +19,9 @@ dependencies = [
 [dependency-groups]
 dev = [
     "mypy>=1.18.2",
+    "pytest>=8.4.2",
+    "pytest-asyncio>=1.2.0",
+    "pytest-cov>=7.0.0",
     "ruff>=0.13.1",
     "types-pyyaml>=6.0.12.20250915",
 ]
@@ -56,5 +59,3 @@ convention = "google"
 [tool.mypy]
 strict = true
 exclude = ["migrations"]
-
-
