@@ -1,8 +1,7 @@
 WELCOME = """
-Hi! I'm LinguAI Pro, your personal language assistant.
-I can help you with learning new languages and improving your skills.
-"""
+Привет! 💫
 
-ERROR = """
-Sorry! Something went wrong. Please try again later.
+Я LinguAI Pro, твой персональный ИИ языковой помощник. 🌍
+
+На каком языке пообщаемся сегодня? Выбирай! 👇
 """
