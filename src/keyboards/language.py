@@ -10,7 +10,7 @@ class Language:
     @staticmethod
     def get_callback_data(lang_code: str) -> str:
         """Get callback data for language."""
-        return f"lang_{lang_code}"
+        return f"LANG_{lang_code}"
 
 
 def get_language_keyboard() -> InlineKeyboardMarkup:
@@ -18,7 +18,7 @@ def get_language_keyboard() -> InlineKeyboardMarkup:
     builder = InlineKeyboardBuilder()
 
     languages = [
-        (Language.ENGLISH, "en"),
+        (Language.ENGLISH, "EN"),
     ]
 
     for text, lang_code in languages:
