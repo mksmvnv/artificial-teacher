@@ -13,3 +13,9 @@ You've selected English 🇺🇸
 
 What's your current English level? 👇
 """
+
+CEFR_EN_START = """
+Great! 👍
+
+Let's start learning English! 📚
+"""
