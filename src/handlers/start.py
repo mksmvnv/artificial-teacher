@@ -7,7 +7,7 @@ from dishka.integrations.aiogram import FromDishka, inject
 
 from src.keyboards.language import get_language_keyboard
 from src.schemas.user import UserSchema
-from src.services.start import StartService
+from src.services import StartService
 from src.texts import messages
 
 router = Router()
