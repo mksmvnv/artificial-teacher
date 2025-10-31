@@ -1,6 +1,7 @@
-.PHONY: run check fix revision upgrade downgrade current history
+.PHONY: run check fix test revision upgrade downgrade current history
 
 SRC ?= src
+TESTS ?= tests
 
 # Application
 
@@ -12,12 +13,27 @@ run:
 # Code quality
 
 check:
-	uv run ruff check $(SRC)
-	uv run mypy $(SRC)
+	uv run ruff check $(SRC) $(TESTS)
+	uv run mypy $(SRC) $(TESTS)
 
 fix:
-	uv run ruff format $(SRC)
-	uv run ruff check --fix $(SRC)
+	uv run ruff format $(SRC) $(TESTS)
+	uv run ruff check --fix $(SRC) $(TESTS)
+
+# Tests
+
+test:
+	uv run python -m pytest $(TESTS)/ -v
+
+test-cov:
+	uv run python -m pytest $(TESTS)/ --cov=src --cov-report=term-missing
+
+test-cov-html:
+	uv run python -m pytest $(TESTS)/ --cov=src --cov-report=html --cov-report=term-missing
+	@echo "Coverage report: file://$(PWD)/htmlcov/index.html"
+
+test-cov-fail:
+	uv run python -m pytest $(TESTS)/ --cov=src --cov-fail-under=80
 
 # Migrations
 
