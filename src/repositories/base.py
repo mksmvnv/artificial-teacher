@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 from typing import Any
 
 from pydantic import BaseModel
-from sqlalchemy import select
+from sqlalchemy import select, update
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
 
 from src.models.base import Base
@@ -22,6 +22,11 @@ class AbstractRepository[ModelType: Base, SchemaType: BaseModel](ABC):
     @abstractmethod
     async def add_one(self, data: SchemaType) -> int:
         """Add one new object."""
+        raise NotImplementedError
+
+    @abstractmethod
+    async def update_one(self, field_name: str, update_data: str, **filter_by_data: Any) -> None:
+        """Update one object."""
         raise NotImplementedError
 
 
@@ -59,3 +64,12 @@ class BaseRepository[ModelType: Base, SchemaType: BaseModel](
             session.add(instance)
             await session.commit()
             return instance.id
+
+    async def update_one(self, field_name: str, update_data: str, **filter_by_data: Any) -> None:
+        """Update one object."""
+        model = self._get_model()
+
+        async with self.session_factory() as session:
+            query = update(model).filter_by(**filter_by_data).values(**{field_name: update_data})
+            await session.execute(query)
+            await session.commit()
