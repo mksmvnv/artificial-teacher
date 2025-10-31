@@ -41,6 +41,8 @@ class DatabaseSettings(BaseModel):
 class ContextSettings(BaseModel):
     """Redis context settings."""
 
+    user: str
+    password: SecretStr
     host: str
     port: int
     ttl: int
@@ -48,7 +50,7 @@ class ContextSettings(BaseModel):
     @property
     def url(self) -> str:
         """Get redis url."""
-        return f"redis://{self.host}:{self.port}"
+        return f"redis://{self.user}:{self.password.get_secret_value()}@{self.host}:{self.port}"
 
 
 class AssistantSettings(BaseModel):
