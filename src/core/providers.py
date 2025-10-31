@@ -3,7 +3,7 @@ from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
 
 from src.core.database import async_session_maker
 from src.repositories.user import UserRepository
-from src.services.start import StartService
+from src.services import ContextService, LanguageService, StartService
 
 
 class DatabaseProvider(Provider):
@@ -33,3 +33,13 @@ class ServiceProvider(Provider):
     def provide_start_service(self, repository: UserRepository) -> StartService:
         """Provide start service."""
         return StartService(repository)
+
+    @provide(scope=Scope.REQUEST)
+    def provide_language_service(self, repository: UserRepository) -> LanguageService:
+        """Provide language service."""
+        return LanguageService(repository)
+
+    @provide(scope=Scope.REQUEST)
+    def provide_context_service(self) -> ContextService:
+        """Provide context service."""
+        return ContextService()
