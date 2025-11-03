@@ -25,11 +25,11 @@ async def handle_language_selection(
     tg_id = callback.from_user.id
 
     if not isinstance(callback_data, str):
-        logger.warning("Callback data is not a string: %s", callback_data)
+        logger.warning("Callback data '%s' is not a string", callback_data)
         return None
 
     if not callback.message or not hasattr(callback.message, "edit_text"):
-        logger.warning("Message not accessible for editing: %s", callback)
+        logger.warning("Message '%s' not accessible for editing", callback)
         return None
 
     language = callback_data.split("_")[1]
@@ -59,23 +59,23 @@ async def handle_cefr_level_selection(
     tg_id = callback.from_user.id
 
     if not isinstance(callback_data, str):
-        logger.warning("Callback data is not a string: %s", callback_data)
+        logger.warning("Callback data '%s' is not a string", callback_data)
         return None
 
     # Get language from context or database
     language = await context_service.get_user_language(tg_id=tg_id)
 
     if not language:
-        logger.warning("State does not contain language for user %d", tg_id)
+        logger.warning("Context does not contain language for user '%d'", tg_id)
         language = await language_service.get_user_language(tg_id=tg_id)
         if not language:
-            logger.warning("User %d language not found in database", tg_id)
+            logger.warning("User '%d' language not found in database", tg_id)
             return None
 
     await callback.answer()
 
     if not callback.message or not hasattr(callback.message, "edit_text"):
-        logger.warning("Message not accessible for editing: %s", callback)
+        logger.warning("Message '%s' not accessible for editing", callback)
         return None
 
     cerf_level = callback_data.split("_")[1]
