@@ -19,7 +19,7 @@ logger = logging.getLogger(__name__)
 async def handle_start(message: Message, start_service: FromDishka[StartService]) -> None:
     """Handle /start command."""
     if not message.from_user:
-        logger.warning("User not found in message: %s", message)
+        logger.warning("User not found in message '%s'", message)
         return None
 
     # Create user object
@@ -31,5 +31,5 @@ async def handle_start(message: Message, start_service: FromDishka[StartService]
     )
 
     await start_service.register_user(user)
-    logger.info("User %d started bot", user.tg_id)
+    logger.info("User '%d' started bot", user.tg_id)
     await message.answer(text=messages.WELCOME, reply_markup=get_language_keyboard())
