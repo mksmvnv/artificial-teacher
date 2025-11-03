@@ -8,9 +8,9 @@ class Language:
     ENGLISH: str = "Английский 🇺🇸"
 
     @staticmethod
-    def get_callback_data(lang_code: str) -> str:
+    def get_callback_data(language: str) -> str:
         """Get callback data for language."""
-        return f"LANG_{lang_code}"
+        return f"LANG_{language}"
 
 
 class CEFRLevel:
@@ -24,9 +24,9 @@ class CEFRLevel:
     C2: str = "C2 🦉"
 
     @staticmethod
-    def get_callback_data(level: str) -> str:
+    def get_callback_data(cefr_level: str) -> str:
         """Get callback data for CEFR level."""
-        return f"CEFR_{level}"
+        return f"CEFR_{cefr_level}"
 
 
 def get_language_keyboard() -> InlineKeyboardMarkup:
@@ -37,9 +37,9 @@ def get_language_keyboard() -> InlineKeyboardMarkup:
         (Language.ENGLISH, "EN"),
     ]
 
-    for text, lang_code in languages:
+    for text, language in languages:
         builder.add(
-            InlineKeyboardButton(text=text, callback_data=Language.get_callback_data(lang_code))
+            InlineKeyboardButton(text=text, callback_data=Language.get_callback_data(language))
         )
 
     builder.adjust(1)
@@ -50,7 +50,7 @@ def get_cefr_keyboard() -> InlineKeyboardMarkup:
     """Get CEFR levels keyboard."""
     builder = InlineKeyboardBuilder()
 
-    levels = [
+    cefr_levels = [
         (CEFRLevel.A1, "A1"),
         (CEFRLevel.A2, "A2"),
         (CEFRLevel.B1, "B1"),
@@ -59,9 +59,9 @@ def get_cefr_keyboard() -> InlineKeyboardMarkup:
         (CEFRLevel.C2, "C2"),
     ]
 
-    for text, level in levels:
+    for text, cefr_level in cefr_levels:
         builder.add(
-            InlineKeyboardButton(text=text, callback_data=CEFRLevel.get_callback_data(level))
+            InlineKeyboardButton(text=text, callback_data=CEFRLevel.get_callback_data(cefr_level))
         )
 
     builder.adjust(1)
