@@ -28,13 +28,16 @@ class TestContextService:
     async def test_set_user_language_success(self, context_service: ContextService) -> None:
         """Test successful language setting."""
         # Arrange
+        PREFIX = "user_language"
         context_service._client.setex = AsyncMock()
 
         # Act
-        await context_service.set_user_language(self.USER_TG_ID, self.EN_LANG)
+        await context_service.set_context(
+            prefix=PREFIX, user_tg_id=self.USER_TG_ID, data=self.EN_LANG
+        )
 
         # Assert
-        expected_key = f"user_language:{self.USER_TG_ID}"
+        expected_key = f"{PREFIX}:{self.USER_TG_ID}"
         context_service._client.setex.assert_called_once_with(
             name=expected_key, time=context_service._ttl, value=self.EN_LANG
         )
@@ -43,13 +46,14 @@ class TestContextService:
     async def test_get_user_language_success(self, context_service: ContextService) -> None:
         """Test successful language retrieval."""
         # Arrange
+        PREFIX = "user_language"
         context_service._client.get = AsyncMock(return_value=self.EN_LANG)
 
         # Act
-        result = await context_service.get_user_language(self.USER_TG_ID)
+        result = await context_service.get_context(prefix=PREFIX, user_tg_id=self.USER_TG_ID)
 
         # Assert
-        expected_key = f"user_language:{self.USER_TG_ID}"
+        expected_key = f"{PREFIX}:{self.USER_TG_ID}"
         context_service._client.get.assert_called_once_with(expected_key)
         assert result == self.EN_LANG
 
@@ -57,10 +61,11 @@ class TestContextService:
     async def test_get_user_language_not_found(self, context_service: ContextService) -> None:
         """Test language retrieval when not found."""
         # Arrange
+        PREFIX = "user_language"
         context_service._client.get = AsyncMock(return_value=None)
 
         # Act
-        result = await context_service.get_user_language(self.USER_TG_ID)
+        result = await context_service.get_context(prefix=PREFIX, user_tg_id=self.USER_TG_ID)
 
         # Assert
         expected_key = f"user_language:{self.USER_TG_ID}"

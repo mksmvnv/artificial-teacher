@@ -17,8 +17,8 @@ class TestLanguageKeyboard:
 
     def test_language_callback_data(self) -> None:
         """Test language callback data generation."""
-        assert Language.get_callback_data("EN") == "LANG_EN"
-        assert Language.get_callback_data("CN") == "LANG_CN"
+        assert Language.get_callback_data("english") == "lang_english"
+        assert Language.get_callback_data("chinese") == "lang_chinese"
 
     def test_get_language_keyboard_structure(self) -> None:
         """Test language keyboard structure."""
@@ -33,7 +33,7 @@ class TestLanguageKeyboard:
         button = row[0]
         assert isinstance(button, InlineKeyboardButton)
         assert button.text == Language.ENGLISH
-        assert button.callback_data == "LANG_EN"
+        assert button.callback_data == "lang_english"
 
 
 class TestCEFRKeyboard:
@@ -50,8 +50,8 @@ class TestCEFRKeyboard:
 
     def test_cefr_callback_data(self) -> None:
         """Test CEFR callback data generation."""
-        assert CEFRLevel.get_callback_data("A1") == "CEFR_A1"
-        assert CEFRLevel.get_callback_data("B2") == "CEFR_B2"
+        assert CEFRLevel.get_callback_data("a1") == "cefr_level_a1"
+        assert CEFRLevel.get_callback_data("b2") == "cefr_level_b2"
 
     def test_get_cefr_keyboard_structure(self) -> None:
         """Test CEFR keyboard structure."""
@@ -62,12 +62,12 @@ class TestCEFRKeyboard:
 
         # Check each row has one button with correct text and callback
         levels = [
-            (CEFRLevel.A1, "CEFR_A1"),
-            (CEFRLevel.A2, "CEFR_A2"),
-            (CEFRLevel.B1, "CEFR_B1"),
-            (CEFRLevel.B2, "CEFR_B2"),
-            (CEFRLevel.C1, "CEFR_C1"),
-            (CEFRLevel.C2, "CEFR_C2"),
+            (CEFRLevel.A1, "cefr_level_a1"),
+            (CEFRLevel.A2, "cefr_level_a2"),
+            (CEFRLevel.B1, "cefr_level_b1"),
+            (CEFRLevel.B2, "cefr_level_b2"),
+            (CEFRLevel.C1, "cefr_level_c1"),
+            (CEFRLevel.C2, "cefr_level_c2"),
         ]
 
         for i, (expected_text, expected_callback) in enumerate(levels):

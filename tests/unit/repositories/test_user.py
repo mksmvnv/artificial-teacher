@@ -18,7 +18,7 @@ class TestUserRepository:
     B1_CEFR_LEVEL = "B1"
 
     @pytest.mark.asyncio
-    async def test_find_by_tg_id_found(
+    async def test_find_by_user_tg_id_found(
         self,
         mock_user_repository: UserRepository,
         mock_async_session: Any,
@@ -32,7 +32,7 @@ class TestUserRepository:
         mock_async_session.execute.return_value = mock_result
 
         # Act
-        result = await mock_user_repository.find_by_tg_id(user_model.tg_id)
+        result = await mock_user_repository.find_by_user_tg_id(user_model.tg_id)
 
         assert result == fake_user
         mock_async_session.execute.assert_called_once()
@@ -40,7 +40,7 @@ class TestUserRepository:
         assert str(call_args) == str(select(User).filter_by(tg_id=user_model.tg_id))
 
     @pytest.mark.asyncio
-    async def test_find_by_tg_id_not_found(
+    async def test_find_by_user_tg_id_not_found(
         self, mock_user_repository: UserRepository, mock_async_session: Any
     ) -> None:
         """Test finding user by tg_id when not exists."""
@@ -50,7 +50,7 @@ class TestUserRepository:
         mock_async_session.execute.return_value = mock_result
 
         # Act
-        result = await mock_user_repository.find_by_tg_id(self.NONEXISTENT_USER_TG_ID)
+        result = await mock_user_repository.find_by_user_tg_id(self.NONEXISTENT_USER_TG_ID)
 
         # Assert
         assert result is None
