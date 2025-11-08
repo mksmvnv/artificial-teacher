@@ -9,7 +9,7 @@ from dishka.integrations.aiogram import AiogramProvider, setup_dishka
 
 from src.core.config import settings
 from src.core.providers import DatabaseProvider, RepositoryProvider, ServiceProvider
-from src.handlers import language, start
+from src.handlers import assistant, language, start
 
 
 async def main() -> None:
@@ -29,7 +29,7 @@ async def main() -> None:
         default=DefaultBotProperties(parse_mode=ParseMode.HTML),
     )
     dp = Dispatcher()
-    dp.include_routers(start.router, language.router)
+    dp.include_routers(start.router, language.router, assistant.router)
 
     container = make_async_container(
         DatabaseProvider(), RepositoryProvider(), ServiceProvider(), AiogramProvider()
