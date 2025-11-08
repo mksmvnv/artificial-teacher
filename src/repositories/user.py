@@ -8,27 +8,27 @@ from src.schemas.user import UserSchema
 class UserRepositoryProtocol(Protocol):
     """Protocol for user repository."""
 
-    async def find_by_tg_id(self, tg_id: int) -> UserSchema | None:
+    async def find_by_user_tg_id(self, user_tg_id: int) -> UserSchema | None:
         """Find user by telegram id or none."""
         ...
 
-    async def add_one(self, data: UserSchema) -> int:
+    async def add_new_user(self, user: UserSchema) -> int:
+        """Add new user."""
+        ...
+
+    async def set_user_language(self, language: str, user_tg_id: int) -> None:
         """Set user language by telegram id."""
         ...
 
-    async def set_user_language(self, language: str, tg_id: int) -> None:
-        """Set user language by telegram id."""
-        ...
-
-    async def get_user_language(self, tg_id: int) -> str | None:
+    async def get_user_language(self, user_tg_id: int) -> str | None:
         """Get user language by telegram id or none."""
         ...
 
-    async def set_user_cefr_level(self, cefr_level: str, tg_id: int) -> None:
+    async def set_user_cefr_level(self, cefr_level: str, user_tg_id: int) -> None:
         """Set user language by telegram id."""
         ...
 
-    async def get_user_cefr_level(self, tg_id: int) -> str | None:
+    async def get_user_cefr_level(self, user_tg_id: int) -> str | None:
         """Get user language by telegram id or none."""
         ...
 
@@ -38,9 +38,9 @@ class UserRepository(BaseRepository[User, UserSchema], UserRepositoryProtocol):
 
     model = User
 
-    async def find_by_tg_id(self, tg_id: int) -> UserSchema | None:
+    async def find_by_user_tg_id(self, user_tg_id: int) -> UserSchema | None:
         """Find user by telegram id or none."""
-        user = await self.find_one_or_none(tg_id=tg_id)
+        user = await self.find_one_or_none(tg_id=user_tg_id)
         if user:
             return UserSchema(
                 tg_id=user.tg_id,
@@ -50,20 +50,25 @@ class UserRepository(BaseRepository[User, UserSchema], UserRepositoryProtocol):
             )
         return None
 
-    async def set_user_language(self, language: str, tg_id: int) -> None:
-        """Set user language by telegram id."""
-        await self.update_one(field_name="language", update_data=language, tg_id=tg_id)
+    async def add_new_user(self, data: UserSchema) -> int:
+        """Add new user."""
+        user_id = await self.add_one(data)
+        return user_id
 
-    async def get_user_language(self, tg_id: int) -> str | None:
+    async def set_user_language(self, language: str, user_tg_id: int) -> None:
+        """Set user language by telegram id."""
+        await self.update_one(field_name="language", update_data=language, tg_id=user_tg_id)
+
+    async def get_user_language(self, user_tg_id: int) -> str | None:
         """Get user language by telegram id or none."""
-        user = await self.find_one_or_none(tg_id=tg_id)
+        user = await self.find_one_or_none(tg_id=user_tg_id)
         return user.language if user else None
 
-    async def set_user_cefr_level(self, cefr_level: str, tg_id: int) -> None:
+    async def set_user_cefr_level(self, cefr_level: str, user_tg_id: int) -> None:
         """Set user language by telegram id."""
-        await self.update_one(field_name="cefr_level", update_data=cefr_level, tg_id=tg_id)
+        await self.update_one(field_name="cefr_level", update_data=cefr_level, tg_id=user_tg_id)
 
-    async def get_user_cefr_level(self, tg_id: int) -> str | None:
+    async def get_user_cefr_level(self, user_tg_id: int) -> str | None:
         """Get user language by telegram id or none."""
-        user = await self.find_one_or_none(tg_id=tg_id)
+        user = await self.find_one_or_none(tg_id=user_tg_id)
         return user.cefr_level if user else None
