@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 
 @router.message(CommandStart())
 @inject
-async def handle_start(message: Message, start_service: FromDishka[StartService]) -> None:
+async def handle_start_command(message: Message, start_service: FromDishka[StartService]) -> None:
     """Handle /start command."""
     if not message.from_user:
         logger.warning("User not found in message '%s'", message)
