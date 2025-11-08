@@ -18,15 +18,20 @@ class ContextService:
             decode_responses=True,
         )
 
-    async def set_user_language(self, tg_id: int, language: str) -> None:
-        """Set user language in redis context."""
-        key = f"user_language:{tg_id}"
-        await self._client.setex(name=key, time=self._ttl, value=language)
-        logger.info("Set language '%s' for user '%d'", language, tg_id)
+    async def set_context(self, prefix: str, user_tg_id: int, data: str) -> None:
+        """Set data in redis context."""
+        key = f"{prefix}:{user_tg_id}"
+        await self._client.setex(name=key, time=self._ttl, value=data)
+        logger.info("Set context '%s' with data '%s' for user '%d'", prefix, data, user_tg_id)
 
-    async def get_user_language(self, tg_id: int) -> str | None:
-        """Get user language from redis context."""
-        key = f"user_language:{tg_id}"
+    async def get_context(self, prefix: str, user_tg_id: int) -> str | None:
+        """Get data from redis context."""
+        key = f"{prefix}:{user_tg_id}"
         data: str | None = await self._client.get(key)
-        logger.info("Received language '%s' for user '%d'", data, tg_id)
+
+        if data is None:
+            logger.info("Context '%s' not found for user '%d'", prefix, user_tg_id)
+            return None
+
+        logger.info("Received context '%s' with data '%s' for user '%d'", prefix, data, user_tg_id)
         return data
