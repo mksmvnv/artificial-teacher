@@ -6,7 +6,11 @@ WELCOME = """
 На каком языке пообщаемся сегодня? Выбирай! 👇
 """
 
-LANG_EN_START = """
+SELECT_LANGUAGE_SKILLS = """
+Пожалуйста, выбери {skill}, используя команду /start 🙏
+"""
+
+ENGLISH_LANGUAGE_START = """
 Awesome! 🎉
 
 You've selected English 🇺🇸
@@ -14,8 +18,12 @@ You've selected English 🇺🇸
 What's your current English level? 👇
 """
 
-CEFR_EN_START = """
+ENGLISH_CEFR_START = """
 Great! 👍
 
 Let's start learning English! 📚
+"""
+
+ENGLISH_ERROR_MESSAGE = """
+Sorry, I didn't understand that. Please try again. 😊
 """
