@@ -85,6 +85,6 @@ def user_model(fake_user: UserSchema) -> User:
         username=fake_user.username,
         first_name=fake_user.first_name,
         last_name=fake_user.last_name,
-        language="EN",
-        cefr_level="B1",
+        language="english",
+        cefr_level="b1",
     )
