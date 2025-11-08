@@ -46,6 +46,7 @@ class ContextSettings(BaseModel):
     host: str
     port: int
     ttl: int
+    max_history_length: int  # Number of messages
 
     @property
     def url(self) -> str:
