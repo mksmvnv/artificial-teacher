@@ -10,7 +10,7 @@ class Language:
     @staticmethod
     def get_callback_data(language: str) -> str:
         """Get callback data for language."""
-        return f"LANG_{language}"
+        return f"lang_{language}"
 
 
 class CEFRLevel:
@@ -26,7 +26,7 @@ class CEFRLevel:
     @staticmethod
     def get_callback_data(cefr_level: str) -> str:
         """Get callback data for CEFR level."""
-        return f"CEFR_{cefr_level}"
+        return f"cefr_level_{cefr_level}"
 
 
 def get_language_keyboard() -> InlineKeyboardMarkup:
@@ -34,7 +34,7 @@ def get_language_keyboard() -> InlineKeyboardMarkup:
     builder = InlineKeyboardBuilder()
 
     languages = [
-        (Language.ENGLISH, "EN"),
+        (Language.ENGLISH, "english"),
     ]
 
     for text, language in languages:
@@ -51,12 +51,12 @@ def get_cefr_keyboard() -> InlineKeyboardMarkup:
     builder = InlineKeyboardBuilder()
 
     cefr_levels = [
-        (CEFRLevel.A1, "A1"),
-        (CEFRLevel.A2, "A2"),
-        (CEFRLevel.B1, "B1"),
-        (CEFRLevel.B2, "B2"),
-        (CEFRLevel.C1, "C1"),
-        (CEFRLevel.C2, "C2"),
+        (CEFRLevel.A1, "a1"),
+        (CEFRLevel.A2, "a2"),
+        (CEFRLevel.B1, "b1"),
+        (CEFRLevel.B2, "b2"),
+        (CEFRLevel.C1, "c1"),
+        (CEFRLevel.C2, "c2"),
     ]
 
     for text, cefr_level in cefr_levels:
